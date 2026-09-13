@@ -186,16 +186,14 @@ function BottomNav({ active, onGo }: NavProps) {
       className="fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-md px-4 pb-[max(env(safe-area-inset-bottom),12px)] md:max-w-lg"
       aria-label="Navegação principal"
     >
-      <div className="grid grid-cols-4 gap-1 rounded-full bg-panel-2/95 p-1.5 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+      <div className="glass-nav relative grid grid-cols-4 gap-1 rounded-full p-1.5 backdrop-blur-2xl backdrop-saturate-150">
         {NAV_ITEMS.map((item) => {
           const isActive = active === item.id
           return (
             <button
               key={item.id}
               onClick={() => onGo(item.id)}
-              className={`tap-target flex flex-col items-center justify-center gap-0.5 rounded-full py-2 transition-colors ${
-                isActive ? 'bg-raised/70 text-accent' : 'text-muted'
-              }`}
+              className="tap-target relative z-10 flex flex-col items-center justify-center gap-0.5 rounded-full py-2"
               aria-current={isActive ? 'page' : undefined}
               aria-label={item.label}
             >
@@ -203,6 +201,14 @@ function BottomNav({ active, onGo }: NavProps) {
             </button>
           )
         })}
+        <span
+          aria-hidden
+          className="glass-pill pointer-events-none absolute inset-y-1.5 z-0 rounded-full"
+          style={{
+            width: `calc((100% - 12px) / 4)`,
+            left: `calc(6px + (100% - 12px) / 4 * ${NAV_ITEMS.findIndex((it) => it.id === active)})`,
+          }}
+        />
       </div>
     </nav>
   )
