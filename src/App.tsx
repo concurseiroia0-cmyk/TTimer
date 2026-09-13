@@ -2,6 +2,7 @@
 // three content screens (Hoje, Comprar, Extrato) plus fullscreen Cronômetro.
 
 import { useEffect, useMemo, useState } from 'react'
+import type { ReactElement } from 'react'
 import {
   computeStartingBalance,
   createDayState,
@@ -34,11 +35,48 @@ interface NavProps {
   onGo: (tab: Tab) => void
 }
 
-const NAV_ITEMS: { id: Tab; label: string; icon: string }[] = [
-  { id: 'hoje', label: 'Hoje', icon: '🏦' },
-  { id: 'comprar', label: 'Comprar', icon: '🛒' },
-  { id: 'extrato', label: 'Extrato', icon: '🧾' },
-  { id: 'eu', label: 'Eu', icon: '👤' },
+const NAV_ITEMS: { id: Tab; label: string; icon: (active: boolean) => ReactElement }[] = [
+  {
+    id: 'hoje',
+    label: 'Hoje',
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+        <rect x="4" y="4" width="7" height="7" rx="2" />
+        <rect x="13" y="4" width="7" height="7" rx="2" />
+        <rect x="4" y="13" width="7" height="7" rx="2" />
+        <rect x="13" y="13" width="7" height="7" rx="2" />
+      </svg>
+    ),
+  },
+  {
+    id: 'comprar',
+    label: 'Comprar',
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+        <rect x="4" y="5" width="16" height="16" rx="3" />
+        <path d="M12 9v6M9 12h6" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    id: 'extrato',
+    label: 'Extrato',
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+        <path d="M4 19V10M9 19V5M14 19v-8M19 19v-4" strokeLinecap="round" strokeWidth={active ? 2.4 : 1.8} />
+      </svg>
+    ),
+  },
+  {
+    id: 'eu',
+    label: 'Eu',
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+        <path d="M8 10h8M8 14h5" strokeLinecap="round" strokeWidth={active ? 2.4 : 1.8} />
+        <path d="M4.5 6.5A2.5 2.5 0 0 1 7 4h10a2.5 2.5 0 0 1 2.5 2.5v9A2.5 2.5 0 0 1 17 18H9l-4.5 3v-14Z" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
 ]
 
 export function App() {
@@ -97,12 +135,12 @@ export function App() {
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col md:max-w-lg">
       <BalanceHeader
-        name={settings.name}
+        title={tab === 'hoje' ? 'Olá, ' + settings.name.split(' ')[0] : tab === 'comprar' ? 'Comprar' : tab === 'extrato' ? 'Extrato' : 'Eu'}
         remainingSeconds={remaining}
         renewsIn={renewsIn}
         onClick={() => setTab('eu')}
       />
-      <main className="flex-1 px-4 pt-4 pb-[calc(88px+env(safe-area-inset-bottom))]">
+      <main className="flex-1 px-4 pt-4 pb-[calc(112px+env(safe-area-inset-bottom))]">
         {tab === 'hoje' && day && (
           <Hoje
             settings={settings}
@@ -145,25 +183,23 @@ function Splash() {
 function BottomNav({ active, onGo }: NavProps) {
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-md border-t border-line/60 bg-ink/85 backdrop-blur-xl md:max-w-lg"
+      className="fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-md px-4 pb-[max(env(safe-area-inset-bottom),12px)] md:max-w-lg"
       aria-label="Navegação principal"
     >
-      <div className="grid grid-cols-4 pb-[env(safe-area-inset-bottom)]">
+      <div className="grid grid-cols-4 gap-1 rounded-full bg-panel-2/95 p-1.5 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl">
         {NAV_ITEMS.map((item) => {
           const isActive = active === item.id
           return (
             <button
               key={item.id}
               onClick={() => onGo(item.id)}
-              className={`tap-target flex flex-col items-center gap-0.5 py-2 text-[11px] transition-colors ${
-                isActive ? 'text-accent' : 'text-muted hover:text-fg'
+              className={`tap-target flex flex-col items-center justify-center gap-0.5 rounded-full py-2 transition-colors ${
+                isActive ? 'bg-raised/70 text-accent' : 'text-muted'
               }`}
               aria-current={isActive ? 'page' : undefined}
+              aria-label={item.label}
             >
-              <span className="text-lg leading-none" aria-hidden>
-                {item.icon}
-              </span>
-              {item.label}
+              {item.icon(isActive)}
             </button>
           )
         })}

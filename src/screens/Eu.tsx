@@ -102,7 +102,7 @@ export function Eu({
   return (
     <div className="space-y-5">
       {/* Profile */}
-      <Card className="border-accent/30">
+      <Card className="bg-panel-2">
         <div className="flex items-center gap-3">
           <div
             className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-accent/15 text-2xl"
@@ -173,7 +173,7 @@ export function Eu({
             key={badge.id}
             title={badge.description}
             className={`rounded-2xl border p-3 text-center ${
-              badge.achieved ? 'border-accent/40 bg-accent/10' : 'border-line bg-panel opacity-45'
+              badge.achieved ? 'bg-accent/15' : 'bg-panel opacity-40'
             }`}
           >
             <p className={`text-2xl ${badge.achieved ? '' : 'grayscale'}`} aria-hidden>
@@ -200,7 +200,7 @@ export function Eu({
               key={label}
               onClick={() => setDeadLabel(deadLabel === label ? null : label)}
               className={`tap-target rounded-xl border px-3 text-sm transition-colors ${
-                deadLabel === label ? 'border-danger bg-danger/10 text-danger' : 'border-line bg-raised'
+                deadLabel === label ? 'bg-danger/15 text-danger' : 'bg-raised/60'
               }`}
             >
               {label}
@@ -213,7 +213,7 @@ export function Eu({
               <button
                 key={minutes}
                 onClick={() => handleAddDeadTime(deadLabel, minutes)}
-                className="tap-target rounded-xl border border-danger/40 bg-danger/10 px-3 text-sm font-medium text-danger tabular-nums"
+                className="tap-target rounded-xl bg-danger/15 px-3 text-sm font-medium text-danger tabular-nums"
               >
                 +{minutes}min
               </button>
@@ -227,7 +227,7 @@ export function Eu({
           </p>
         )}
         {showShock && (
-          <p className="mt-2 rounded-xl border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-danger">
+          <p className="mt-2 rounded-xl bg-danger/15 px-3 py-2 text-sm text-danger">
             Você registrou mais tempo morto do que tempo investido hoje. Isso é um empréstimo que seu futuro paga.
           </p>
         )}
@@ -336,7 +336,7 @@ function WeeklyGoalsCard({
           <select
             value={newActivityId}
             onChange={(event) => setNewActivityId(event.target.value)}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-3 text-sm outline-none focus:border-accent/60"
+            className="tap-target w-full rounded-xl bg-raised px-3 text-sm outline-none focus:border-accent/60"
           >
             {templates.map((template) => (
               <option key={template.id} value={template.id}>
@@ -353,7 +353,7 @@ function WeeklyGoalsCard({
             step={10}
             value={newMinutes}
             onChange={(event) => setNewMinutes(event.target.value)}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-3 text-sm tabular-nums outline-none focus:border-accent/60"
+            className="tap-target w-full rounded-xl bg-raised px-3 text-sm tabular-nums outline-none focus:border-accent/60"
           />
         </label>
         <Button variant="ghost" onClick={addGoal}>
@@ -378,7 +378,7 @@ function NightReflectionCard({ day }: { day: DayState }) {
         rows={3}
         maxLength={500}
         placeholder="O que o seu saldo de hoje diz sobre as suas prioridades?"
-        className="w-full resize-none rounded-xl border border-line bg-raised px-3 py-2 text-sm outline-none placeholder:text-muted/60 focus:border-accent/60"
+        className="w-full resize-none rounded-xl bg-raised px-3 py-2 text-sm outline-none placeholder:text-muted/60 focus:border-accent/60"
       />
       <div className="mt-2 flex items-center justify-between">
         <span className="text-[11px] text-muted">{text.length}/500 · salvo neste dia</span>
@@ -443,7 +443,7 @@ function SettingsCard({ settings }: { settings: UserSettings }) {
             value={name}
             onChange={(event) => setName(event.target.value)}
             maxLength={40}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base outline-none focus:border-accent/60"
+            className="tap-target w-full rounded-xl bg-raised px-4 text-base outline-none focus:border-accent/60"
           />
         </label>
         <div className="grid grid-cols-2 gap-3">
@@ -459,7 +459,7 @@ function SettingsCard({ settings }: { settings: UserSettings }) {
             step={0.5}
             value={workHours}
             onChange={(event) => setWorkHours(event.target.value)}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base tabular-nums outline-none focus:border-accent/60"
+            className="tap-target w-full rounded-xl bg-raised px-4 text-base tabular-nums outline-none focus:border-accent/60"
           />
         </label>
         <label className="block">
@@ -471,7 +471,7 @@ function SettingsCard({ settings }: { settings: UserSettings }) {
             step={0.5}
             value={mealsHours}
             onChange={(event) => setMealsHours(event.target.value)}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base tabular-nums outline-none focus:border-accent/60"
+            className="tap-target w-full rounded-xl bg-raised px-4 text-base tabular-nums outline-none focus:border-accent/60"
           />
         </label>
         <TimeField label="O dia renova às" value={dayRenewsAt} onChange={setDayRenewsAt} hint="05:59 ainda pertence a hoje." />
@@ -545,7 +545,7 @@ function DangerZone() {
     )
   }
   return (
-    <Card className="border-danger/50">
+    <Card className="bg-danger/10">
       <p className="text-sm text-danger">Tem certeza? Não dá para desfazer.</p>
       <div className="mt-3 grid grid-cols-2 gap-2">
         <Button variant="ghost" onClick={() => setConfirming(false)}>

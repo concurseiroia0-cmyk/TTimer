@@ -95,7 +95,7 @@ export function Comprar({
                 )
               }}
               className={`flex min-h-[76px] flex-col items-start gap-0.5 rounded-2xl border p-3 text-left transition-colors ${
-                isSelected ? 'border-accent bg-accent/10' : 'border-line bg-panel hover:border-muted/40'
+                isSelected ? 'bg-accent/15 text-accent' : 'bg-panel text-fg'
               }`}
             >
               <span className="text-xl" aria-hidden>
@@ -109,7 +109,7 @@ export function Comprar({
       </div>
 
       {/* Custom activity creator */}
-      <div className={`rounded-2xl border p-3 ${isCustom ? 'border-accent bg-accent/10' : 'border-dashed border-line bg-panel'}`}>
+      <div className={`rounded-2xl p-3 ${isCustom ? 'bg-accent/15' : 'bg-panel'}`}>
         <label className="flex items-center gap-2">
           <span className="text-xl" aria-hidden>
             ➕
@@ -144,7 +144,7 @@ export function Comprar({
                 setError(null)
               }}
               className={`tap-target rounded-xl border px-4 text-sm font-medium tabular-nums transition-colors ${
-                minutes === option ? 'border-accent bg-accent/10 text-accent' : 'border-line bg-panel text-fg hover:border-muted/40'
+                minutes === option ? 'bg-accent/15 text-accent' : 'bg-panel text-fg'
               }`}
             >
               {option}min
@@ -162,7 +162,7 @@ export function Comprar({
               setError(null)
             }}
             placeholder="custom"
-            className="tap-target w-24 rounded-xl border border-line bg-panel px-3 text-sm tabular-nums outline-none focus:border-accent/60"
+            className="tap-target w-24 rounded-xl bg-panel px-3 text-sm tabular-nums outline-none focus:border-accent/60"
             aria-label="Minutos personalizados"
           />
         </div>

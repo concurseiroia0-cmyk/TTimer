@@ -18,13 +18,7 @@ export function useNow(intervalMs = 1000): number {
 // --- layout -------------------------------------------------------------------
 
 export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return (
-    <div
-      className={`rounded-2xl border border-line bg-panel/90 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.9)] ${className}`}
-    >
-      {children}
-    </div>
-  )
+  return <div className={`rounded-2xl bg-panel p-4 ${className}`}>{children}</div>
 }
 
 export function SectionTitle({ children, action }: { children: ReactNode; action?: ReactNode }) {
@@ -46,11 +40,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANTS: Record<ButtonVariant, string> = {
-  accent:
-    'bg-accent-strong text-white font-semibold hover:bg-accent active:bg-accent accent-glow border border-accent/40',
-  ghost: 'bg-raised/70 text-fg border border-line hover:border-accent/50',
-  danger: 'bg-danger/15 text-danger border border-danger/40 hover:bg-danger/25',
-  success: 'bg-success/15 text-success border border-success/40 hover:bg-success/25',
+  accent: 'bg-accent-strong text-white font-semibold hover:bg-accent active:scale-[0.98]',
+  ghost: 'bg-raised/60 text-fg active:scale-[0.98]',
+  danger: 'bg-danger/10 text-danger active:scale-[0.98]',
+  success: 'bg-success/10 text-success active:scale-[0.98]',
 }
 
 export function Button({ variant = 'ghost', block, className = '', ...rest }: ButtonProps) {
@@ -75,7 +68,7 @@ export function TextField({
       {label && <span className="mb-1.5 block px-1 text-sm font-medium text-muted">{label}</span>}
       <input
         {...rest}
-        className={`tap-target w-full rounded-xl border border-line bg-raised px-4 text-base text-fg outline-none placeholder:text-muted/60 focus:border-accent/60 ${className}`}
+        className={`tap-target w-full rounded-xl bg-raised px-4 text-base text-fg outline-none placeholder:text-muted/60 focus:border-accent/60 ${className}`}
       />
       {hint && <span className="mt-1 block px-1 text-xs text-muted">{hint}</span>}
     </label>
@@ -100,7 +93,7 @@ export function TimeField({
         type="time"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base text-fg outline-none focus:border-accent/60"
+        className="tap-target w-full rounded-xl bg-raised px-4 text-base text-fg outline-none focus:border-accent/60"
       />
       {hint && <span className="mt-1 block px-1 text-xs text-muted">{hint}</span>}
     </label>
@@ -157,7 +150,7 @@ export function EmptyState({
   action?: ReactNode
 }) {
   return (
-    <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-line px-6 py-8 text-center">
+    <div className="flex flex-col items-center gap-2 rounded-2xl bg-panel px-6 py-8 text-center">
       <span className="text-3xl" aria-hidden>
         {emoji}
       </span>

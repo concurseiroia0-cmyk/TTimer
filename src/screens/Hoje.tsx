@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import {
   formatMinutesLabel,
-  greetingForHour,
   investedSeconds,
   secondsToHHmm,
   secondsToHHMMSS,
@@ -46,15 +45,11 @@ export function Hoje({
     renewsIn > 0 &&
     starting > 0
 
-  const hour = new Date(now).getHours()
 
   return (
     <div className="space-y-5">
       {/* Hero balance */}
       <section>
-        <p className="text-lg font-semibold">
-          {greetingForHour(hour)}, <span className="text-accent">{settings.name}</span>
-        </p>
         <p className="text-xs text-muted">Seu dia renova às {settings.dayRenewsAt}</p>
 
         <div className="mt-4">
@@ -71,27 +66,27 @@ export function Hoje({
       </section>
 
       {showUrgency && (
-        <div className="rounded-2xl border border-danger/40 bg-danger/10 px-4 py-3 text-sm text-danger">
+        <div className="rounded-2xl bg-danger/10 px-4 py-3 text-sm text-danger">
           Você ainda tem <span className="font-semibold">{formatMinutesLabel(remaining)}</span> de saldo que vão expirar.
           Vai deixar morrer?
         </div>
       )}
 
       {starting === 0 && (
-        <div className="rounded-2xl border border-danger/40 bg-danger/10 px-4 py-3 text-sm text-danger">
+        <div className="rounded-2xl bg-danger/10 px-4 py-3 text-sm text-danger">
           Saldo esgotado por configuração: sono + trabalho + refeições fecham 24h. Ajuste em <b>Eu</b> para liberar saldo.
         </div>
       )}
 
       {starting > 0 && remaining === 0 && !running && (
-        <div className="rounded-2xl border border-danger/40 bg-danger/10 px-4 py-3 text-sm text-danger">
+        <div className="rounded-2xl bg-danger/10 px-4 py-3 text-sm text-danger">
           Saldo esgotado. Volta quando o dia renovar.
         </div>
       )}
 
       {/* Running session as primary CTA */}
       {running && (
-        <Card className="border-accent/40">
+        <Card>
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <p className="text-xs text-muted">Em andamento</p>
@@ -193,7 +188,7 @@ export function Hoje({
 
 function TotalTile({ label, value, tone }: { label: string; value: string; tone: 'success' | 'danger' }) {
   return (
-    <div className={`rounded-xl border px-4 py-3 ${tone === 'success' ? 'border-success/30 bg-success/5' : 'border-danger/30 bg-danger/5'}`}>
+    <div className={`rounded-xl px-4 py-3 ${tone === 'success' ? 'bg-success/10' : 'bg-danger/10'}`}>
       <p className="text-xs text-muted">{label}</p>
       <p className={`font-mono text-xl font-bold tabular-nums ${tone === 'success' ? 'text-success' : 'text-danger'}`}>{value}</p>
     </div>

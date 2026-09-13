@@ -45,7 +45,7 @@ export function Extrato({ data }: { data: AppData }) {
       </section>
 
       {/* Day selector */}
-      <div className="flex items-center justify-between rounded-2xl border border-line bg-panel px-2 py-2">
+      <div className="flex items-center justify-between rounded-2xl bg-panel px-2 py-2">
         <button
           onClick={() => go(-1)}
           className="tap-target rounded-xl px-3 text-muted transition-colors hover:text-fg"
@@ -140,7 +140,7 @@ export function Extrato({ data }: { data: AppData }) {
       <SectionTitle>Últimos 7 dias</SectionTitle>
       <Card>
         <WeeklyBars week={week} starting={day?.startingBalanceSeconds ?? 0} />
-        <div className="mt-4 border-t border-line pt-3">
+        <div className="mt-4 pt-3">
           <WeekComparison thisWeek={week.totalInvested} lastWeek={lastWeek.totalInvested} />
         </div>
       </Card>
@@ -157,11 +157,11 @@ function SummaryRow({ day }: { day: DayState }) {
         <p className="text-[11px] text-muted">Investido</p>
         <p className="font-mono text-base font-bold tabular-nums text-success">{formatMinutesLabel(summary.investedSeconds)}</p>
       </div>
-      <div className="rounded-2xl border border-line bg-panel px-3 py-3 text-center">
+      <div className="rounded-2xl bg-panel px-3 py-3 text-center">
         <p className="text-[11px] text-muted">Tempo morto</p>
         <p className="font-mono text-base font-bold tabular-nums text-fg">{formatMinutesLabel(dead)}</p>
       </div>
-      <div className="rounded-2xl border border-danger/30 bg-danger/5 px-3 py-3 text-center">
+      <div className="rounded-2xl bg-danger/10 px-3 py-3 text-center">
         <p className="text-[11px] text-muted">Desperdiçado</p>
         <p className="font-mono text-base font-bold tabular-nums text-danger">{formatMinutesLabel(summary.wastedSeconds)}</p>
       </div>

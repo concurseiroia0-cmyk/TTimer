@@ -191,7 +191,7 @@ function TimerInner({
               />
             </div>
 
-            <div className="mt-6 rounded-xl border border-line bg-panel px-4 py-2">
+            <div className="mt-6 rounded-xl bg-panel px-4 py-2">
               <p className="text-[10px] tracking-[0.14em] text-muted uppercase">Saldo do dia</p>
               <p className="font-mono text-xl font-bold tabular-nums text-fg">{secondsToHHMMSS(balanceRemaining)}</p>
             </div>
@@ -206,7 +206,7 @@ function TimerInner({
           {/* ---------------- one-hand controls ---------------- */}
           <div className="sticky bottom-[max(env(safe-area-inset-bottom),16px)] space-y-2">
             {confirmEnd ? (
-              <div className="rounded-2xl border border-danger/40 bg-danger/10 p-4">
+              <div className="rounded-2xl bg-danger/10 p-4">
                 <p className="text-sm text-fg">
                   Encerrar agora? O tempo já investido será debitado e a sessão fica como abandonada se não completou.
                 </p>

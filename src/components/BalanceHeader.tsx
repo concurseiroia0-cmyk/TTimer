@@ -1,14 +1,15 @@
-// Top bar with the always-visible live remaining balance (widget-like header).
+// Minimalist top bar: big page title on the left, compact live balance chip
+// on the right — like a fitness app header. Frosted so content scrolls under.
 
 import { secondsToHHMMSS } from '../engine/timebank'
 
 export function BalanceHeader({
-  name,
+  title,
   remainingSeconds,
   renewsIn,
   onClick,
 }: {
-  name: string | null
+  title: string
   remainingSeconds: number
   renewsIn: number // seconds until renewal
   onClick?: () => void
@@ -16,20 +17,21 @@ export function BalanceHeader({
   const hours = Math.floor(renewsIn / 3600)
   const minutes = Math.floor((renewsIn % 3600) / 60)
   return (
-    <header className="sticky top-0 z-20 border-b border-line/60 bg-ink/80 px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3 backdrop-blur-xl">
+    <header className="sticky top-0 z-20 bg-ink/85 px-4 pt-[max(env(safe-area-inset-top),14px)] pb-3 backdrop-blur-xl">
       <div className="flex items-center justify-between gap-3">
-        <div className="min-w-0">
-          <p className="truncate text-[11px] tracking-wide text-muted uppercase">Saldo investível</p>
-          <p className="font-mono text-2xl font-bold tabular-nums text-accent" style={{ fontVariantNumeric: 'tabular-nums' }}>
-            {secondsToHHMMSS(remainingSeconds)}
-          </p>
-        </div>
+        <h1 className="text-[28px] leading-tight font-bold tracking-tight">{title}</h1>
         <button
           onClick={onClick}
-          className="tap-target rounded-xl border border-line bg-panel px-3 py-1.5 text-right text-[11px] leading-tight text-muted transition-colors hover:border-accent/40"
+          className="tap-target flex items-center gap-2 rounded-full bg-panel px-3.5 py-2 text-right transition-colors active:scale-[0.98]"
+          aria-label="Saldo investível e renovação do dia"
         >
-          {name ? <span className="block max-w-[120px] truncate text-fg">{name}</span> : null}
-          <span className="block">renova em {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}</span>
+          <span className="flex flex-col items-end leading-none">
+            <span className="font-mono text-sm font-bold tabular-nums text-accent">{secondsToHHMMSS(remainingSeconds)}</span>
+            <span className="mt-0.5 text-[10px] text-muted">renova {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}</span>
+          </span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 text-muted">
+            <path d="M13 3 5.5 13.5H11L10 21l7.5-10.5H12L13 3Z" strokeLinejoin="round" />
+          </svg>
         </button>
       </div>
     </header>

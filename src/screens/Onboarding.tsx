@@ -86,7 +86,7 @@ export function Onboarding() {
                 onChange={(event) => setName(event.target.value)}
                 placeholder="Seu nome"
                 maxLength={40}
-                className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base outline-none placeholder:text-muted/60 focus:border-accent/60"
+                className="tap-target w-full rounded-xl bg-raised px-4 text-base outline-none placeholder:text-muted/60 focus:border-accent/60"
               />
             </div>
           </Card>
@@ -102,7 +102,7 @@ export function Onboarding() {
               <TimeField label="Dorme às" value={sleepStart} onChange={setSleepStart} />
               <TimeField label="Acorda às" value={wakeTime} onChange={setWakeTime} />
             </div>
-            <p className="mt-4 rounded-xl border border-line bg-raised px-4 py-3 text-sm">
+            <p className="mt-4 rounded-xl bg-raised px-4 py-3 text-sm">
               Duração do sono: <span className="font-semibold text-accent">{sleepLabel}</span>
             </p>
           </Card>
@@ -137,7 +137,7 @@ export function Onboarding() {
               <BreakdownRow label={`Sono (${sleepStart} → ${wakeTime})`} value={`- ${secondsToHHmm(computeSleepDuration(sleepStart, wakeTime))}`} />
               <BreakdownRow label="Trabalho / obrigações" value={`- ${secondsToHHmm((Number(workHours) || 0) * 3600)}`} />
               <BreakdownRow label="Refeições e higiene" value={`- ${secondsToHHmm((Number(mealsHours) || 0) * 3600)}`} />
-              <div className="border-t border-line pt-2">
+              <div className="pt-2">
                 <BreakdownRow label="Saldo investível / dia" value={secondsToHHmm(balanceSeconds)} strong />
               </div>
             </div>
@@ -203,7 +203,7 @@ function NumberStepper({
   const numeric = Number(value) || 0
   const clamp = (next: number) => Math.min(max, Math.max(min, next))
   return (
-    <div className="flex items-center justify-between rounded-xl border border-line bg-raised p-2">
+    <div className="flex items-center justify-between rounded-xl bg-raised p-2">
       <button
         onClick={() => onChange(String(clamp(numeric - step)))}
         className="tap-target w-12 rounded-lg bg-panel text-2xl text-muted"
