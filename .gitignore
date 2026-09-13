@@ -6,3 +6,4 @@ dev-dist
 .DS_Store
 .freebuff
 .github/workflows/*.log
+lighthouse.json
