@@ -1,5 +1,5 @@
 // Minimalist top bar: big page title on the left, compact live balance chip
-// on the right — like a fitness app header. Frosted so content scrolls under.
+// on the right — iOS 26 liquid glass, matching the bottom nav material.
 
 import { secondsToHHMMSS } from '../engine/timebank'
 
@@ -17,12 +17,12 @@ export function BalanceHeader({
   const hours = Math.floor(renewsIn / 3600)
   const minutes = Math.floor((renewsIn % 3600) / 60)
   return (
-    <header className="sticky top-0 z-20 bg-ink/85 px-4 pt-[max(env(safe-area-inset-top),14px)] pb-3 backdrop-blur-xl">
-      <div className="flex items-center justify-between gap-3">
-        <h1 className="text-[28px] leading-tight font-bold tracking-tight">{title}</h1>
+    <header className="sticky top-0 z-20 px-4 pt-[max(env(safe-area-inset-top),14px)] pb-3">
+      <div className="glass-nav flex items-center justify-between gap-3 rounded-full py-2 pr-2 pl-5 backdrop-blur-2xl backdrop-saturate-150">
+        <h1 className="text-[24px] leading-tight font-bold tracking-tight">{title}</h1>
         <button
           onClick={onClick}
-          className="tap-target flex items-center gap-2 rounded-full bg-panel px-3.5 py-2 text-right transition-colors active:scale-[0.98]"
+          className="tap-target flex items-center gap-2 rounded-full bg-raised/60 px-3.5 py-2 text-right transition-colors active:scale-[0.98]"
           aria-label="Saldo investível e renovação do dia"
         >
           <span className="flex flex-col items-end leading-none">

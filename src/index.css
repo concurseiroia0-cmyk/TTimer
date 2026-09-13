@@ -134,3 +134,33 @@
     transition: none;
   }
 }
+
+/* iOS 26 app-switcher style icon bounce when a tab becomes active.
+   The element is remounted on activation (key change) to replay it. */
+@keyframes icon-pop {
+  0% {
+    transform: scale(0.55);
+    opacity: 0.4;
+  }
+  55% {
+    transform: scale(1.22);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(0.94);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.icon-pop {
+  display: inline-flex;
+  animation: icon-pop 480ms var(--spring) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-pop {
+    animation: none;
+  }
+}

@@ -197,7 +197,10 @@ function BottomNav({ active, onGo }: NavProps) {
               aria-current={isActive ? 'page' : undefined}
               aria-label={item.label}
             >
-              {item.icon(isActive)}
+              {/* Remount on activation so the pop animation replays on every tab change */}
+              <span key={isActive ? item.id + '-on' : item.id + '-off'} className={isActive ? 'icon-pop text-accent' : 'text-muted'}>
+                {item.icon(isActive)}
+              </span>
             </button>
           )
         })}
