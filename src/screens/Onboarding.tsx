@@ -53,7 +53,7 @@ export function Onboarding() {
   }
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pt-[max(env(safe-area-inset-top),16px)] pb-[max(env(safe-area-inset-bottom),16px)]">
+    <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pt-[max(env(safe-area-inset-top),16px)] pb-[max(env(safe-area-inset-bottom),16px)]">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <p className="text-lg font-bold text-accent">TTimer</p>
@@ -172,7 +172,7 @@ export function Onboarding() {
         )}
       </div>
       <Motto className="mt-4" />
-    </div>
+    </main>
   )
 }
 
