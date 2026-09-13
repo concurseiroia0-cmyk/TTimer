@@ -9,6 +9,7 @@ import type { ActivityTemplate, AppData, DeadTimeLabel, DayState, Session, UserS
 import {
   computeStartingBalance,
   createSession,
+  secondsUntilRenew,
   todayDateKey,
   applyTick,
   catchUpAfterBackground,
@@ -66,9 +67,26 @@ export function flushPersist(): void {
 
 export function hydrate(nowMs: number = Date.now()): void {
   state.data = loadData()
+  migrateToMidnight()
   hydrated = true
   bootstrapDay(nowMs)
   startScheduler()
+}
+
+/**
+ * v1.1 behavior: the day renews at 00:00 (Brasília local time). Existing
+ * installs keep their sleep/work configuration but get the midnight renewal;
+ * recorded once so we never override a deliberate user choice made after.
+ */
+function migrateToMidnight(): void {
+  const data = state.data
+  if (!data.settings || data.midnightMigrated) return
+  if (data.settings.dayRenewsAt !== '00:00') {
+    state.data = { ...data, settings: { ...data.settings, dayRenewsAt: '00:00' }, midnightMigrated: true }
+    flushPersist()
+  } else {
+    state.data = { ...data, midnightMigrated: true }
+  }
 }
 
 /** Create today's DayState, catch up any running session, schedule renewal. */
@@ -262,6 +280,10 @@ export function startSession(input: {
 
   const remaining = computeRemainingSafe(day)
   if (input.plannedSeconds > remaining) return null // blocked at UI level too
+  // A purchase can never outlive the day: the balance melts with the clock,
+  // so buying more time than is left before renewal would be unpayable.
+  const timeLeft = secondsUntilRenew(data.settings.dayRenewsAt, nowMs)
+  if (input.plannedSeconds > timeLeft) return null // blocked at UI level too
 
   const session = createSession({
     id: `s_${nowMs}_${Math.random().toString(36).slice(2, 8)}`,

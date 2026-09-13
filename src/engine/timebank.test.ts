@@ -9,6 +9,7 @@ import {
   computeStartingBalance,
   createDayState,
   createSession,
+  effectiveBalanceSeconds,
   evolutionCoins,
   previousDateKey,
   secondsByActivity,
@@ -71,6 +72,31 @@ describe('computeStartingBalance', () => {
   })
   it('returns 0 when settings are invalid', () => {
     expect(computeStartingBalance({ ...DEFAULT_SETTINGS, workHoursPerDay: 20 })).toBe(0)
+  })
+})
+
+describe('effectiveBalanceSeconds (clock-melted balance)', () => {
+  const STARTING = 6 * 3600
+  const sessions: Session[] = []
+
+  it('caps the balance at the wall-clock time left before renewal', () => {
+    // Ledger still has 6h but only 3h left until the day expires.
+    expect(effectiveBalanceSeconds(STARTING, sessions, 3 * 3600)).toBe(3 * 3600)
+  })
+  it('uses the ledger when it is smaller than the time left', () => {
+    // Spent 4h of sessions → 2h left on the ledger, 5h on the clock.
+    const spent: Session[] = [{
+      id: 's1', dateKey: '2026-09-10', activityId: 'read', activityName: 'Leitura',
+      emoji: '📖', plannedSeconds: 4 * 3600, elapsedSeconds: 4 * 3600, status: 'completed',
+      startedAt: '2026-09-10T10:00:00Z',
+    }]
+    expect(effectiveBalanceSeconds(STARTING, spent, 5 * 3600)).toBe(2 * 3600)
+  })
+  it('is 0 when the day has expired', () => {
+    expect(effectiveBalanceSeconds(STARTING, sessions, 0)).toBe(0)
+  })
+  it('never goes negative', () => {
+    expect(effectiveBalanceSeconds(STARTING, sessions, -60)).toBe(0)
   })
 })
 

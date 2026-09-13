@@ -234,6 +234,21 @@ export function computeRemaining(startingBalanceSeconds: number, sessions: Sessi
   return Math.max(0, remaining)
 }
 
+/**
+ * Effective available balance: the smaller of what the ledger says and how
+ * much wall-clock time is left before the day expires. The balance "melts"
+ * in real time as the day's clock runs down — time not invested evaporates.
+ * Example: 6h of ledger balance at 21:00 (3h left until 00:00) → 3h effective.
+ */
+export function effectiveBalanceSeconds(
+  startingBalanceSeconds: number,
+  sessions: Session[],
+  secondsUntilRenew: number,
+): number {
+  const ledger = computeRemaining(startingBalanceSeconds, sessions)
+  return Math.max(0, Math.min(ledger, Math.max(0, secondsUntilRenew)))
+}
+
 // ---------------------------------------------------------------------------
 // Ticking — always derived from wall-clock timestamps (no drift)
 // ---------------------------------------------------------------------------

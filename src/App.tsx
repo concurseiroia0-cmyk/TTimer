@@ -6,6 +6,7 @@ import type { ReactElement } from 'react'
 import {
   computeStartingBalance,
   createDayState,
+  effectiveBalanceSeconds,
   investedSeconds,
   secondsUntilRenew,
   todayDateKey,
@@ -102,12 +103,21 @@ export function App() {
     }
   }, [])
 
+  // Live clock for the header chip: the balance melts with the wall clock.
+  const [now, setNow] = useState(() => Date.now())
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(Date.now()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+
   const settings = data.settings
   const todayKey = settings ? todayDateKey(settings.dayRenewsAt) : ''
   const day = useMemo(() => selectToday(settings, data.days), [settings, data.days])
 
-  const remaining = day ? Math.max(0, day.remainingBalanceSeconds) : 0
-  const renewsIn = settings ? secondsUntilRenew(settings.dayRenewsAt) : 0
+  const renewsIn = settings ? secondsUntilRenew(settings.dayRenewsAt, now) : 0
+  const remaining = day
+    ? effectiveBalanceSeconds(day.startingBalanceSeconds, day.sessions, renewsIn)
+    : 0
 
   // Keep re-calculating "today" so renewal is picked up even if the scheduler
   // timeout fired while the tab was frozen.
@@ -153,6 +163,7 @@ export function App() {
           <Comprar
             day={day}
             templates={selectMergedTemplates(data)}
+            dayRenewsAt={settings.dayRenewsAt}
             onGoTimer={(sessionId) => setTimerSessionId(sessionId)}
           />
         )}

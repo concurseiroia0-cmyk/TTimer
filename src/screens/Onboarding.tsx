@@ -29,7 +29,7 @@ export function Onboarding() {
     wakeTime,
     workHoursPerDay: Number(workHours) || 0,
     mealsHygieneHours: Number(mealsHours) || 0,
-    dayRenewsAt: wakeTime,
+    dayRenewsAt: '00:00', // the day expires at midnight (Brasília local time)
   }
 
   const validation = useMemo(() => validateSettings(draft), [sleepStart, wakeTime, workHours, mealsHours])

@@ -1,7 +1,7 @@
 // Screen 2 — Comprar Tempo: pick an activity, pick a duration, confirm the purchase.
 
-import { useState } from 'react'
-import { secondsToHHmm, secondsToHHMMSS } from '../engine/timebank'
+import { useEffect, useState } from 'react'
+import { secondsToHHmm, secondsToHHMMSS, secondsUntilRenew } from '../engine/timebank'
 import type { ActivityTemplate, DayState } from '../state/types'
 import { addCustomTemplate, startSession } from '../state/store'
 import { BalanceBar, Button, Card, SectionTitle } from '../components/ui'
@@ -12,17 +12,29 @@ const CUSTOM_ID = '__custom__'
 export function Comprar({
   day,
   templates,
+  dayRenewsAt,
   onGoTimer,
 }: {
   day: DayState
   templates: ActivityTemplate[]
+  dayRenewsAt: string
   onGoTimer: (sessionId: string) => void
 }) {
-  const remaining = Math.max(0, day.remainingBalanceSeconds)
+  const ledger = Math.max(0, day.remainingBalanceSeconds)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [customName, setCustomName] = useState('')
   const [minutes, setMinutes] = useState<number | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+  // The balance melts with the clock: you can never buy more time than is
+  // left before the day expires at midnight.
+  const [now, setNow] = useState(() => Date.now())
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(Date.now()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+  const renewsIn = secondsUntilRenew(dayRenewsAt, now)
+  const remaining = Math.min(ledger, renewsIn)
 
   const selected = templates.find((t) => t.id === selectedId) ?? null
   const isCustom = selectedId === CUSTOM_ID
@@ -184,7 +196,7 @@ export function Comprar({
           </div>
           {insufficient && (
             <p className="mt-2 text-xs text-danger">
-              Compra bloqueada: faltam {secondsToHHmm(costSeconds - remaining)} de saldo.
+              Compra bloqueada: faltam {secondsToHHmm(costSeconds - remaining)} de saldo hoje.
             </p>
           )}
           <div className="mt-3">

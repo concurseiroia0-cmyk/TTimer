@@ -1,8 +1,8 @@
 // Circular gauge modeled on the "Summary / kWp Produced now" reference:
 // a thick glowing arc (open at the bottom) that drains as the day's balance
-// is spent, a dimmer inner ring showing what was already invested (the dual
-// ring of the reference), the big value in the center and a caption below.
-// The arc sweeps in from empty on mount and the number counts up smoothly.
+// is spent, a dimmer inner ring showing what was already invested, the big
+// value in the center and the renewal countdown INSIDE the arc (so nothing
+// overlaps the ring). Sweeps in from empty on mount; counts up smoothly.
 
 import { useEffect, useRef, useState } from 'react'
 import { secondsToHHMMSS } from '../engine/timebank'
@@ -35,14 +35,16 @@ export function SummaryGauge({
   remainingSeconds,
   startingSeconds,
   renewsIn,
+  renewLabel,
 }: {
   remainingSeconds: number
   startingSeconds: number
-  renewsIn: number // seconds until the day renews
+  renewsIn: number // seconds until the day renews (clock-melted effective balance)
+  renewLabel: string // e.g. "até o dia renovar" — rendered INSIDE the arc
 }) {
-  const ratio = startingSeconds > 0 ? Math.max(0, Math.min(1, remainingSeconds / startingSeconds)) : 0
+  const ratio = renewsIn > 0 ? Math.max(0, Math.min(1, remainingSeconds / Math.max(1, startingSeconds))) : 0
   const investedRatio = startingSeconds > 0 ? Math.max(0, Math.min(1, 1 - ratio)) : 0
-  const low = ratio < 0.2
+  const low = renewsIn > 0 && ratio < 0.2
 
   // Mount sweep: both arcs grow in from empty on the first frames.
   const [mounted, setMounted] = useState(false)
@@ -59,7 +61,7 @@ export function SummaryGauge({
     const to = remainingSeconds
     fromRef.current = to
     if (from === to) return
-    const duration = 600
+    const duration = 500
     const start = performance.now()
     let raf = 0
     const step = (t: number) => {
@@ -72,23 +74,19 @@ export function SummaryGauge({
     return () => cancelAnimationFrame(raf)
   }, [remainingSeconds])
 
-  // Dash offsets: outer = remaining balance, inner = already invested.
+  // Dash offsets: outer = effective (clock-melted) balance, inner = invested.
   const fillOffset = mounted ? ARC_LENGTH * (1 - ratio) : ARC_LENGTH
   const innerOffset = mounted ? INNER_ARC_LENGTH * (1 - investedRatio) : INNER_ARC_LENGTH
-
-  const hoursLeft = Math.floor(renewsIn / 3600)
-  const minutesLeft = Math.floor((renewsIn % 3600) / 60)
-  const timeLeftLabel = hoursLeft > 0 ? `~ ${hoursLeft}h ${minutesLeft}min` : `~ ${minutesLeft}min`
 
   const fillFrom = low ? '#f87171' : '#c4b5fd'
   const fillTo = low ? '#ef4444' : '#8b5cf6'
   const innerColor = low ? 'rgba(239, 68, 68, 0.32)' : 'rgba(139, 92, 246, 0.30)'
 
   return (
-    <div className="rounded-2xl bg-panel px-5 py-6">
+    <div className="rounded-2xl bg-panel px-4 py-5">
       <p className="text-center text-sm font-medium text-muted">Resumo do dia</p>
 
-      <div className="relative mx-auto mt-2" style={{ width: SIZE, height: SIZE * 0.82, maxWidth: '100%' }}>
+      <div className="relative mx-auto mt-1" style={{ width: SIZE, height: SIZE * 0.82, maxWidth: '100%' }}>
         <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="w-full" style={{ maxHeight: SIZE }}>
           <defs>
             <linearGradient id="gauge-track" x1="0" y1="0" x2="1" y2="1">
@@ -126,7 +124,7 @@ export function SummaryGauge({
             strokeWidth={STROKE}
             strokeLinecap="round"
           />
-          {/* inner ring: time already invested (the darker inner arc of the reference) */}
+          {/* inner ring: time already invested */}
           <path
             d={arcPath(INNER_RADIUS)}
             fill="none"
@@ -137,7 +135,7 @@ export function SummaryGauge({
             strokeDashoffset={innerOffset}
             style={{ transition: 'stroke-dashoffset 700ms cubic-bezier(0.22, 1, 0.36, 1)' }}
           />
-          {/* fill — drains as the balance is spent */}
+          {/* fill — the clock-melted effective balance */}
           <path
             d={arcPath(RADIUS)}
             fill="none"
@@ -150,25 +148,23 @@ export function SummaryGauge({
           />
         </svg>
 
-        {/* center readout */}
+        {/* Center readout: value + caption INSIDE the arc — nothing overlaps the ring */}
         <div
-          className="absolute inset-x-0 flex flex-col items-center"
-          style={{ top: '38%', transform: 'translateY(-50%)' }}
+          className="absolute inset-0 flex flex-col items-center justify-center pb-6"
           aria-live="polite"
         >
           <span
-            className="text-[46px] leading-none font-bold tracking-tight"
+            className="text-[44px] leading-none font-bold tracking-tight"
             style={{ fontVariantNumeric: 'tabular-nums' }}
           >
             {secondsToHHMMSS(displaySeconds)}
           </span>
           <span className="mt-1.5 text-xs text-muted">saldo investível</span>
+          <span className="mt-2 rounded-full bg-raised/70 px-3 py-1 text-[11px] font-medium tabular-nums text-muted">
+            ⏳ {renewLabel}
+          </span>
         </div>
       </div>
-
-      <p className="-mt-1 text-center text-sm text-muted tabular-nums">
-        {timeLeftLabel} até o dia renovar
-      </p>
     </div>
   )
 }

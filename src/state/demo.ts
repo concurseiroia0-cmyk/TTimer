@@ -10,7 +10,7 @@ const DEFAULT_DEMO_SETTINGS = {
   wakeTime: '06:00',
   workHoursPerDay: 8,
   mealsHygieneHours: 2,
-  dayRenewsAt: '06:00',
+  dayRenewsAt: '00:00',
   weeklyGoals: [
     { activityId: 'read', minutes: 210 },
     { activityId: 'exercise', minutes: 135 },

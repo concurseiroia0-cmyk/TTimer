@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import {
+  effectiveBalanceSeconds,
   formatMinutesLabel,
   investedSeconds,
   secondsToHHmm,
@@ -33,14 +34,16 @@ export function Hoje({
   }, [])
 
   const invested = investedSeconds(day.sessions)
-  const remaining = Math.max(0, day.remainingBalanceSeconds)
+  const ledger = Math.max(0, day.remainingBalanceSeconds)
   const starting = day.startingBalanceSeconds
   const renewsIn = secondsUntilRenew(settings.dayRenewsAt, now)
+  // The balance melts with the clock: never more than the time left today.
+  const remaining = effectiveBalanceSeconds(starting, day.sessions, renewsIn)
 
   const running = day.sessions.find((s) => s.status === 'running')
   const showUrgency =
     running == null &&
-    remaining > URGENT_MINIMUM_BALANCE &&
+    ledger > URGENT_MINIMUM_BALANCE &&
     renewsIn < URGENT_WINDOW_SECONDS &&
     renewsIn > 0 &&
     starting > 0
@@ -48,20 +51,14 @@ export function Hoje({
 
   return (
     <div className="space-y-5">
-      {/* Hero: circular gauge (Summary style) */}
+      {/* Hero: circular gauge (Summary style) — everything inside the ring */}
       <section>
-        <p className="text-xs text-muted">Seu dia renova às {settings.dayRenewsAt}</p>
-        <div className="mt-3">
-          <SummaryGauge
-            remainingSeconds={remaining}
-            startingSeconds={starting}
-            renewsIn={renewsIn}
-          />
-          <div className="mt-2 flex justify-between text-xs text-muted">
-            <span>{formatMinutesLabel(remaining)} restantes</span>
-            <span>de {formatMinutesLabel(starting)} de hoje</span>
-          </div>
-        </div>
+        <SummaryGauge
+          remainingSeconds={remaining}
+          startingSeconds={starting}
+          renewsIn={renewsIn}
+          renewLabel={`${secondsToHHMMSS(renewsIn)} até o dia renovar`}
+        />
       </section>
 
       {showUrgency && (
@@ -114,7 +111,7 @@ export function Hoje({
           <p className="mt-3 text-center text-xs text-muted">
             {starting > 0 && invested >= starting
               ? 'Dia 100% investido. 🏆'
-              : `Todo saldo não investido expira às ${settings.dayRenewsAt}.`}
+              : `Todo saldo não investido evapora à meia-noite.`}
           </p>
         </Card>
       </section>

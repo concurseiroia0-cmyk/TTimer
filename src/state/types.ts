@@ -29,6 +29,8 @@ export interface AppData {
   customTemplates: ActivityTemplate[]
   lifetimeInvestedSeconds: number
   completedSessions: number
+  /** Set once the settings were migrated to midnight renewal (v1.1 behavior). */
+  midnightMigrated?: boolean
 }
 
 export const DEFAULT_TEMPLATES: ActivityTemplate[] = [
