@@ -1,0 +1,8 @@
+node_modules
+dist
+dev-dist
+*.local
+*.log
+.DS_Store
+.freebuff
+.github/workflows/*.log

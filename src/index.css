@@ -1,0 +1,73 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* TimeBank dark banking palette */
+  --color-ink: #0b0f14; /* app background */
+  --color-panel: #10161f; /* cards */
+  --color-raised: #151d28; /* inputs / elevated */
+  --color-line: #232c3a; /* subtle borders */
+  --color-gold: #e8c547; /* money / time accent */
+  --color-gold-soft: #f4d464;
+  --color-success: #3ddc97;
+  --color-danger: #ff5c5c;
+  --color-muted: #9aa4b2;
+  --color-fg: #e9eef5;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    background-image:
+      radial-gradient(1200px 500px at 50% -10%, rgba(232, 197, 71, 0.05), transparent 60%),
+      radial-gradient(900px 500px at 110% 110%, rgba(61, 220, 151, 0.04), transparent 55%);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: var(--color-raised);
+    color: var(--color-fg);
+  }
+
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.65);
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  ::selection {
+    background: rgba(232, 197, 71, 0.25);
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility tap-target {
+  min-height: 44px;
+  min-width: 44px;
+}
