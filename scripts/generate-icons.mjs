@@ -12,10 +12,10 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const SOURCE = join(root, 'assets', 'app-icon-source.png')
 const OUT_DIR = join(root, 'public', 'icons')
 
-// Brand background: TimeBank ink with the signature subtle gold glow.
-const BG_TOP = [17, 23, 32] // slightly lifted ink at top
-const BG_BOTTOM = [8, 11, 16] // ink at bottom
-const GLOW = [232, 197, 71] // gold
+// Brand background: TTimer ink with the signature violet glow.
+const BG_TOP = [19, 26, 46] // lifted navy at top
+const BG_BOTTOM = [10, 14, 26] // ink at bottom
+const GLOW = [139, 92, 246] // violet
 
 // --- helpers -----------------------------------------------------------------
 

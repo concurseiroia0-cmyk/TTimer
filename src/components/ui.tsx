@@ -20,7 +20,7 @@ export function useNow(intervalMs = 1000): number {
 export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={`rounded-2xl border border-line bg-panel/90 p-4 shadow-[0_1px_0_rgba(255,255,255,0.03)_inset,0_10px_30px_-18px_rgba(0,0,0,0.8)] ${className}`}
+      className={`rounded-2xl border border-line bg-panel/90 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.9)] ${className}`}
     >
       {children}
     </div>
@@ -38,7 +38,7 @@ export function SectionTitle({ children, action }: { children: ReactNode; action
 
 // --- buttons -------------------------------------------------------------------
 
-type ButtonVariant = 'gold' | 'ghost' | 'danger' | 'success'
+type ButtonVariant = 'accent' | 'ghost' | 'danger' | 'success'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
@@ -46,8 +46,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANTS: Record<ButtonVariant, string> = {
-  gold: 'bg-gold text-ink hover:bg-gold-soft active:bg-gold-soft font-semibold shadow-[0_8px_24px_-12px_rgba(232,197,71,0.7)]',
-  ghost: 'bg-raised text-fg border border-line hover:border-muted/50',
+  accent:
+    'bg-accent-strong text-white font-semibold hover:bg-accent active:bg-accent accent-glow border border-accent/40',
+  ghost: 'bg-raised/70 text-fg border border-line hover:border-accent/50',
   danger: 'bg-danger/15 text-danger border border-danger/40 hover:bg-danger/25',
   success: 'bg-success/15 text-success border border-success/40 hover:bg-success/25',
 }
@@ -74,7 +75,7 @@ export function TextField({
       {label && <span className="mb-1.5 block px-1 text-sm font-medium text-muted">{label}</span>}
       <input
         {...rest}
-        className={`tap-target w-full rounded-xl border border-line bg-raised px-4 text-base text-fg outline-none placeholder:text-muted/60 focus:border-gold/60 ${className}`}
+        className={`tap-target w-full rounded-xl border border-line bg-raised px-4 text-base text-fg outline-none placeholder:text-muted/60 focus:border-accent/60 ${className}`}
       />
       {hint && <span className="mt-1 block px-1 text-xs text-muted">{hint}</span>}
     </label>
@@ -99,7 +100,7 @@ export function TimeField({
         type="time"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base text-fg outline-none focus:border-gold/60"
+        className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base text-fg outline-none focus:border-accent/60"
       />
       {hint && <span className="mt-1 block px-1 text-xs text-muted">{hint}</span>}
     </label>
@@ -110,13 +111,13 @@ export function TimeField({
 
 export function BalanceBar({
   ratio,
-  tone = 'gold',
+  tone = 'accent',
 }: {
   ratio: number // 0..1
-  tone?: 'gold' | 'success' | 'danger'
+  tone?: 'accent' | 'success' | 'danger'
 }) {
   const clamped = Math.max(0, Math.min(1, ratio))
-  const color = tone === 'gold' ? 'bg-gold' : tone === 'success' ? 'bg-success' : 'bg-danger'
+  const color = tone === 'accent' ? 'bg-accent' : tone === 'success' ? 'bg-success' : 'bg-danger'
   return (
     <div className="h-2.5 w-full overflow-hidden rounded-full bg-raised">
       <div

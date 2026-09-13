@@ -77,7 +77,7 @@ export function Timer({
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
         <p className="text-sm text-muted">Esta sessão não existe mais.</p>
-        <Button variant="gold" onClick={onExit}>
+        <Button variant="accent" onClick={onExit}>
           Voltar ao painel
         </Button>
       </div>
@@ -130,7 +130,7 @@ function TimerInner({
   const countdownColor = useMemo(() => {
     if (finished) return 'text-success'
     if (exhausted) return 'text-danger'
-    return 'text-gold'
+    return 'text-accent'
   }, [finished, exhausted])
 
   return (
@@ -161,7 +161,7 @@ function TimerInner({
             {session.emoji} {session.activityName} · {secondsToHHmm(session.elapsedSeconds)} investidos
           </p>
           <p className="mt-4 max-w-[34ch] text-sm italic text-muted">“{quote}”</p>
-          <Button variant="gold" block className="mt-6 max-w-xs" onClick={onExit}>
+          <Button variant="accent" block className="mt-6 max-w-xs" onClick={onExit}>
             Voltar ao painel
           </Button>
         </div>
@@ -186,7 +186,7 @@ function TimerInner({
             {/* progress ring substitute: thin bar */}
             <div className="mt-5 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-raised">
               <div
-                className={`h-full rounded-full transition-[width] duration-1000 ease-linear ${finished ? 'bg-success' : 'bg-gold'}`}
+                className={`h-full rounded-full transition-[width] duration-1000 ease-linear ${finished ? 'bg-success' : 'bg-accent'}`}
                 style={{ width: `${Math.min(100, Math.max(0, progress * 100))}%` }}
               />
             </div>
@@ -227,7 +227,7 @@ function TimerInner({
               </div>
             ) : (
               <Button
-                variant="gold"
+                variant="accent"
                 block
                 className="h-16 rounded-2xl text-lg"
                 disabled={finished || abandoned}

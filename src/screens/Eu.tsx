@@ -102,10 +102,10 @@ export function Eu({
   return (
     <div className="space-y-5">
       {/* Profile */}
-      <Card className="border-gold/30">
+      <Card className="border-accent/30">
         <div className="flex items-center gap-3">
           <div
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gold/15 text-2xl"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-accent/15 text-2xl"
             aria-hidden
           >
             🏦
@@ -115,7 +115,7 @@ export function Eu({
             <p className="truncate text-xs text-muted">saldo diário {secondsToHHmm(day.startingBalanceSeconds)}</p>
           </div>
           <div className="shrink-0 text-right">
-            <p className="font-mono text-xl font-bold tabular-nums text-gold">🪙 {coins}</p>
+            <p className="font-mono text-xl font-bold tabular-nums text-accent">🪙 {coins}</p>
             <p className="text-[10px] text-muted">moedas de evolução</p>
           </div>
         </div>
@@ -173,7 +173,7 @@ export function Eu({
             key={badge.id}
             title={badge.description}
             className={`rounded-2xl border p-3 text-center ${
-              badge.achieved ? 'border-gold/40 bg-gold/10' : 'border-line bg-panel opacity-45'
+              badge.achieved ? 'border-accent/40 bg-accent/10' : 'border-line bg-panel opacity-45'
             }`}
           >
             <p className={`text-2xl ${badge.achieved ? '' : 'grayscale'}`} aria-hidden>
@@ -322,7 +322,7 @@ function WeeklyGoalsCard({
               </div>
               <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-raised">
                 <div
-                  className={`h-full rounded-full ${pct >= 100 ? 'bg-success' : 'bg-gold'}`}
+                  className={`h-full rounded-full ${pct >= 100 ? 'bg-success' : 'bg-accent'}`}
                   style={{ width: `${pct}%` }}
                 />
               </div>
@@ -336,7 +336,7 @@ function WeeklyGoalsCard({
           <select
             value={newActivityId}
             onChange={(event) => setNewActivityId(event.target.value)}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-3 text-sm outline-none focus:border-gold/60"
+            className="tap-target w-full rounded-xl border border-line bg-raised px-3 text-sm outline-none focus:border-accent/60"
           >
             {templates.map((template) => (
               <option key={template.id} value={template.id}>
@@ -353,7 +353,7 @@ function WeeklyGoalsCard({
             step={10}
             value={newMinutes}
             onChange={(event) => setNewMinutes(event.target.value)}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-3 text-sm tabular-nums outline-none focus:border-gold/60"
+            className="tap-target w-full rounded-xl border border-line bg-raised px-3 text-sm tabular-nums outline-none focus:border-accent/60"
           />
         </label>
         <Button variant="ghost" onClick={addGoal}>
@@ -378,7 +378,7 @@ function NightReflectionCard({ day }: { day: DayState }) {
         rows={3}
         maxLength={500}
         placeholder="O que o seu saldo de hoje diz sobre as suas prioridades?"
-        className="w-full resize-none rounded-xl border border-line bg-raised px-3 py-2 text-sm outline-none placeholder:text-muted/60 focus:border-gold/60"
+        className="w-full resize-none rounded-xl border border-line bg-raised px-3 py-2 text-sm outline-none placeholder:text-muted/60 focus:border-accent/60"
       />
       <div className="mt-2 flex items-center justify-between">
         <span className="text-[11px] text-muted">{text.length}/500 · salvo neste dia</span>
@@ -425,7 +425,7 @@ function SettingsCard({ settings }: { settings: UserSettings }) {
           <Row label="Trabalho" value={`${settings.workHoursPerDay}h / dia`} />
           <Row label="Refeições e higiene" value={`${settings.mealsHygieneHours}h / dia`} />
           <Row label="Dia renova às" value={settings.dayRenewsAt} />
-          <Row label="Saldo diário" value={secondsToHHmm(computeBalance(settings))} gold />
+          <Row label="Saldo diário" value={secondsToHHmm(computeBalance(settings))} accent />
         </div>
         <Button variant="ghost" block className="mt-4" onClick={() => setEditing(true)}>
           Editar
@@ -443,7 +443,7 @@ function SettingsCard({ settings }: { settings: UserSettings }) {
             value={name}
             onChange={(event) => setName(event.target.value)}
             maxLength={40}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base outline-none focus:border-gold/60"
+            className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base outline-none focus:border-accent/60"
           />
         </label>
         <div className="grid grid-cols-2 gap-3">
@@ -459,7 +459,7 @@ function SettingsCard({ settings }: { settings: UserSettings }) {
             step={0.5}
             value={workHours}
             onChange={(event) => setWorkHours(event.target.value)}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base tabular-nums outline-none focus:border-gold/60"
+            className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base tabular-nums outline-none focus:border-accent/60"
           />
         </label>
         <label className="block">
@@ -471,7 +471,7 @@ function SettingsCard({ settings }: { settings: UserSettings }) {
             step={0.5}
             value={mealsHours}
             onChange={(event) => setMealsHours(event.target.value)}
-            className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base tabular-nums outline-none focus:border-gold/60"
+            className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base tabular-nums outline-none focus:border-accent/60"
           />
         </label>
         <TimeField label="O dia renova às" value={dayRenewsAt} onChange={setDayRenewsAt} hint="05:59 ainda pertence a hoje." />
@@ -504,7 +504,7 @@ function SettingsCard({ settings }: { settings: UserSettings }) {
           Cancelar
         </Button>
         <Button
-          variant="gold"
+          variant="accent"
           disabled={!validation.ok}
           onClick={() => {
             updateSettings(draft)
@@ -518,11 +518,11 @@ function SettingsCard({ settings }: { settings: UserSettings }) {
   )
 }
 
-function Row({ label, value, gold }: { label: string; value: string; gold?: boolean }) {
+function Row({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
     <div className="flex items-center justify-between gap-3">
       <span className="text-muted">{label}</span>
-      <span className={`text-right ${gold ? 'font-mono font-bold text-gold tabular-nums' : 'font-medium'}`}>{value}</span>
+      <span className={`text-right ${accent ? 'font-mono font-bold text-accent tabular-nums' : 'font-medium'}`}>{value}</span>
     </div>
   )
 }

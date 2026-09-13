@@ -12,7 +12,7 @@ import {
 
 interface BannerItem {
   id: number
-  tone: 'gold' | 'success' | 'danger'
+  tone: 'accent' | 'success' | 'danger'
   title: string
   body?: string
 }
@@ -58,7 +58,7 @@ export function Banners({
     if (notificationPermission() === 'default') {
       const id = window.setTimeout(() => {
         pushBanner({
-          tone: 'gold',
+          tone: 'accent',
           title: 'Ativar lembretes?',
           body: 'Podemos avisar quando o saldo renovar ou estiver perto de expirar.',
         })
@@ -86,7 +86,7 @@ export function Banners({
       if (investedTodaySeconds === 0 && renewsIn > 3 * 3600 && remainingSeconds > 0 && !firedRef.current.idle) {
         firedRef.current.idle = true
         pushBanner({
-          tone: 'gold',
+          tone: 'accent',
           title: 'Sua conta está parada',
           body: 'Já faz um bom tempo que nada foi investido hoje.',
         })
@@ -117,7 +117,7 @@ export function Banners({
               ? 'border-danger/50 bg-danger/15 text-danger'
               : banner.tone === 'success'
                 ? 'border-success/50 bg-success/15 text-success'
-                : 'border-gold/50 bg-gold/15 text-gold'
+                : 'border-accent/50 bg-accent/15 text-accent'
           }`}
           role="status"
         >

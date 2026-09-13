@@ -20,8 +20,8 @@ export function BatteryBalance({
   const ratio = startingSeconds > 0 ? Math.max(0, Math.min(1, remainingSeconds / startingSeconds)) : 0
   const percent = Math.round(ratio * 100)
   const low = ratio < 0.2
-  const fillColor = low ? 'bg-danger' : 'bg-gold'
-  const glow = low ? 'shadow-[0_0_14px_rgba(255,92,92,0.45)]' : 'shadow-[0_0_14px_rgba(232,197,71,0.4)]'
+  const fillColor = low ? 'bg-danger' : 'bg-accent'
+  const glow = low ? 'shadow-[0_0_16px_rgba(248,113,113,0.5)]' : 'shadow-[0_0_18px_rgba(139,92,246,0.55)]'
 
   const hoursLeft = Math.floor(renewsIn / 3600)
   const minutesLeft = Math.floor((renewsIn % 3600) / 60)
@@ -34,10 +34,10 @@ export function BatteryBalance({
   )
 
   return (
-    <div className="rounded-[28px] border border-line bg-panel px-5 py-6">
+    <div className="card-glow rounded-[28px] border border-line bg-gradient-to-b from-panel-2 to-panel px-5 py-6">
       {/* charge % */}
       <div className="flex items-center justify-center gap-2" aria-live="polite">
-        <svg viewBox="0 0 24 24" className={`h-7 w-7 ${low ? 'text-danger' : 'text-gold'}`} aria-hidden>
+        <svg viewBox="0 0 24 24" className={`h-7 w-7 ${low ? 'text-danger' : 'text-accent'}`} aria-hidden>
           <path fill="currentColor" d="M13 2 4.5 13.5h5L9 22l8.5-11.5h-5L13 2Z" />
         </svg>
         <span
@@ -50,7 +50,7 @@ export function BatteryBalance({
 
       {/* battery shell with pill cells */}
       <div
-        className="mt-5 rounded-[22px] border-2 border-raised bg-ink p-2.5"
+        className="mt-5 rounded-[22px] border-2 border-raised/80 bg-ink/70 p-2.5"
         role="progressbar"
         aria-valuemin={0}
         aria-valuemax={100}

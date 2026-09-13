@@ -56,7 +56,7 @@ export function Onboarding() {
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-5 pt-[max(env(safe-area-inset-top),16px)] pb-[max(env(safe-area-inset-bottom),16px)]">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <p className="text-lg font-bold text-gold">TTimer</p>
+          <p className="text-lg font-bold text-accent">TTimer</p>
           <p className="text-xs text-muted">Configure seu banco de tempo</p>
         </div>
         <p className="text-xs text-muted">
@@ -69,7 +69,7 @@ export function Onboarding() {
         {STEPS.map((_, index) => (
           <div
             key={index}
-            className={`h-1 flex-1 rounded-full transition-colors ${index <= step ? 'bg-gold' : 'bg-raised'}`}
+            className={`h-1 flex-1 rounded-full transition-colors ${index <= step ? 'bg-accent' : 'bg-raised'}`}
           />
         ))}
       </div>
@@ -86,7 +86,7 @@ export function Onboarding() {
                 onChange={(event) => setName(event.target.value)}
                 placeholder="Seu nome"
                 maxLength={40}
-                className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base outline-none placeholder:text-muted/60 focus:border-gold/60"
+                className="tap-target w-full rounded-xl border border-line bg-raised px-4 text-base outline-none placeholder:text-muted/60 focus:border-accent/60"
               />
             </div>
           </Card>
@@ -103,7 +103,7 @@ export function Onboarding() {
               <TimeField label="Acorda às" value={wakeTime} onChange={setWakeTime} />
             </div>
             <p className="mt-4 rounded-xl border border-line bg-raised px-4 py-3 text-sm">
-              Duração do sono: <span className="font-semibold text-gold">{sleepLabel}</span>
+              Duração do sono: <span className="font-semibold text-accent">{sleepLabel}</span>
             </p>
           </Card>
         )}
@@ -162,11 +162,11 @@ export function Onboarding() {
           </Button>
         )}
         {step < STEPS.length - 1 ? (
-          <Button variant="gold" block disabled={!stepValid} onClick={() => setStep((s) => s + 1)}>
+          <Button variant="accent" block disabled={!stepValid} onClick={() => setStep((s) => s + 1)}>
             Continuar
           </Button>
         ) : (
-          <Button variant="gold" block disabled={!validation.ok} onClick={finish}>
+          <Button variant="accent" block disabled={!validation.ok} onClick={finish}>
             Abrir minha conta
           </Button>
         )}
@@ -180,7 +180,7 @@ function BreakdownRow({ label, value, strong }: { label: string; value: string; 
   return (
     <div className="flex items-center justify-between">
       <span className={strong ? 'font-semibold text-fg' : 'text-muted'}>{label}</span>
-      <span className={`font-mono tabular-nums ${strong ? 'text-lg font-bold text-gold' : 'text-fg'}`}>{value}</span>
+      <span className={`font-mono tabular-nums ${strong ? 'text-lg font-bold text-accent' : 'text-fg'}`}>{value}</span>
     </div>
   )
 }

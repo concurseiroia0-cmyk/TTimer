@@ -10,9 +10,9 @@ const INTENSITY_STEPS = [30 * 60, 60 * 60] // 0: none, 1: <30min, 2: <60min, 3: 
 
 const CELL_COLORS = [
   'bg-raised', // no activity
-  'bg-gold/25',
-  'bg-gold/55',
-  'bg-gold',
+  'bg-accent/25',
+  'bg-accent/55',
+  'bg-accent',
 ]
 
 export function HabitHeatmap({
@@ -69,7 +69,7 @@ export function HabitHeatmap({
                   key={dateKey}
                   title={`${formatCellDate(dateKey)}: ${Math.round((byDay.get(dateKey) ?? 0) / 60)}min`}
                   className={`h-3 w-3 shrink-0 rounded-[3px] ${CELL_COLORS[levelFor(dateKey)]} ${
-                    dateKey === endDateKey ? 'ring-1 ring-gold/70' : ''
+                    dateKey === endDateKey ? 'ring-1 ring-accent/70' : ''
                   }`}
                 />
               ))}

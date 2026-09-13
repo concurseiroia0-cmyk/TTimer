@@ -222,7 +222,7 @@ function WeeklyBars({ week, starting }: { week: { days: WeekDay[] }; starting: n
             <div key={d.dateKey} className="flex flex-1 flex-col items-center gap-1">
               <div className="flex h-24 w-full items-end">
                 <div
-                  className={`w-full rounded-t-md ${d.exists ? 'bg-gold/80' : 'bg-raised'}`}
+                  className={`w-full rounded-t-md ${d.exists ? 'bg-accent/80' : 'bg-raised'}`}
                   style={{ height: `${Math.max(d.invested > 0 ? 4 : 2, heightPct)}%` }}
                   title={`${formatDayLabel(d.dateKey, false)}: ${formatMinutesLabel(d.invested)} investidos`}
                 />

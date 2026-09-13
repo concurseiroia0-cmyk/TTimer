@@ -95,7 +95,7 @@ export function Comprar({
                 )
               }}
               className={`flex min-h-[76px] flex-col items-start gap-0.5 rounded-2xl border p-3 text-left transition-colors ${
-                isSelected ? 'border-gold bg-gold/10' : 'border-line bg-panel hover:border-muted/40'
+                isSelected ? 'border-accent bg-accent/10' : 'border-line bg-panel hover:border-muted/40'
               }`}
             >
               <span className="text-xl" aria-hidden>
@@ -109,7 +109,7 @@ export function Comprar({
       </div>
 
       {/* Custom activity creator */}
-      <div className={`rounded-2xl border p-3 ${isCustom ? 'border-gold bg-gold/10' : 'border-dashed border-line bg-panel'}`}>
+      <div className={`rounded-2xl border p-3 ${isCustom ? 'border-accent bg-accent/10' : 'border-dashed border-line bg-panel'}`}>
         <label className="flex items-center gap-2">
           <span className="text-xl" aria-hidden>
             ➕
@@ -144,7 +144,7 @@ export function Comprar({
                 setError(null)
               }}
               className={`tap-target rounded-xl border px-4 text-sm font-medium tabular-nums transition-colors ${
-                minutes === option ? 'border-gold bg-gold/10 text-gold' : 'border-line bg-panel text-fg hover:border-muted/40'
+                minutes === option ? 'border-accent bg-accent/10 text-accent' : 'border-line bg-panel text-fg hover:border-muted/40'
               }`}
             >
               {option}min
@@ -162,7 +162,7 @@ export function Comprar({
               setError(null)
             }}
             placeholder="custom"
-            className="tap-target w-24 rounded-xl border border-line bg-panel px-3 text-sm tabular-nums outline-none focus:border-gold/60"
+            className="tap-target w-24 rounded-xl border border-line bg-panel px-3 text-sm tabular-nums outline-none focus:border-accent/60"
             aria-label="Minutos personalizados"
           />
         </div>
@@ -176,7 +176,7 @@ export function Comprar({
             <span className="text-muted">Saldo após compra:</span>
             <span
               className={`font-mono text-base font-semibold tabular-nums ${
-                insufficient ? 'text-danger' : 'text-gold'
+                insufficient ? 'text-danger' : 'text-accent'
               }`}
             >
               {secondsToHHMMSS(afterBalance)}
@@ -188,13 +188,13 @@ export function Comprar({
             </p>
           )}
           <div className="mt-3">
-            <BalanceBar ratio={remaining > 0 ? afterBalance / remaining : 0} tone={insufficient ? 'danger' : 'gold'} />
+            <BalanceBar ratio={remaining > 0 ? afterBalance / remaining : 0} tone={insufficient ? 'danger' : 'accent'} />
           </div>
 
           {error && <p className="mt-3 text-sm text-danger">{error}</p>}
 
           <Button
-            variant="gold"
+            variant="accent"
             block
             className="mt-4"
             disabled={!ready || insufficient}

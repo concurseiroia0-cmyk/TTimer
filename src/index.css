@@ -4,17 +4,20 @@
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* TimeBank dark banking palette */
-  --color-ink: #0b0f14; /* app background */
-  --color-panel: #10161f; /* cards */
-  --color-raised: #151d28; /* inputs / elevated */
-  --color-line: #232c3a; /* subtle borders */
-  --color-gold: #e8c547; /* money / time accent */
-  --color-gold-soft: #f4d464;
-  --color-success: #3ddc97;
-  --color-danger: #ff5c5c;
-  --color-muted: #9aa4b2;
-  --color-fg: #e9eef5;
+  /* TTimer — sapphire/violet dark design system */
+  --color-ink: #0a0e1a; /* page background, near-black navy */
+  --color-panel: #131a2e; /* cards */
+  --color-panel-2: #1a2240; /* elevated cards */
+  --color-raised: #242d52; /* inputs, wells, empty cells */
+  --color-line: #273054; /* subtle borders */
+  --color-accent: #a78bfa; /* violet — money/time accent */
+  --color-accent-strong: #8b5cf6; /* deeper violet — fills */
+  --color-accent-soft: #c4b5fd; /* light violet — text on ink */
+  --color-accent-glow: #7c3aed; /* glow shadows */
+  --color-success: #4ade80; /* invested */
+  --color-danger: #f87171; /* waste / urgent */
+  --color-muted: #8a93b2; /* secondary text */
+  --color-fg: #eef1fa; /* primary text */
 }
 
 @layer base {
@@ -25,8 +28,9 @@
   body {
     background-color: var(--color-ink);
     background-image:
-      radial-gradient(1200px 500px at 50% -10%, rgba(232, 197, 71, 0.05), transparent 60%),
-      radial-gradient(900px 500px at 110% 110%, rgba(61, 220, 151, 0.04), transparent 55%);
+      radial-gradient(1100px 480px at 18% -8%, rgba(139, 92, 246, 0.16), transparent 55%),
+      radial-gradient(900px 480px at 108% 12%, rgba(99, 102, 241, 0.12), transparent 55%),
+      radial-gradient(1000px 600px at 50% 118%, rgba(167, 139, 250, 0.1), transparent 60%);
     color: var(--color-fg);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -56,7 +60,7 @@
   }
 
   ::selection {
-    background: rgba(232, 197, 71, 0.25);
+    background: rgba(167, 139, 250, 0.3);
   }
 }
 
@@ -70,4 +74,14 @@
 @utility tap-target {
   min-height: 44px;
   min-width: 44px;
+}
+
+@utility card-glow {
+  box-shadow:
+    0 0 0 1px rgba(167, 139, 250, 0.08),
+    0 18px 40px -24px rgba(124, 58, 237, 0.45);
+}
+
+@utility accent-glow {
+  box-shadow: 0 10px 30px -12px rgba(139, 92, 246, 0.65);
 }

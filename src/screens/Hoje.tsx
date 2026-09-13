@@ -53,7 +53,7 @@ export function Hoje({
       {/* Hero balance */}
       <section>
         <p className="text-lg font-semibold">
-          {greetingForHour(hour)}, <span className="text-gold">{settings.name}</span>
+          {greetingForHour(hour)}, <span className="text-accent">{settings.name}</span>
         </p>
         <p className="text-xs text-muted">Seu dia renova às {settings.dayRenewsAt}</p>
 
@@ -91,18 +91,18 @@ export function Hoje({
 
       {/* Running session as primary CTA */}
       {running && (
-        <Card className="border-gold/40">
+        <Card className="border-accent/40">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <p className="text-xs text-muted">Em andamento</p>
               <p className="truncate text-base font-semibold">
                 {running.emoji} {running.activityName}
               </p>
-              <p className="font-mono text-sm tabular-nums text-gold">
+              <p className="font-mono text-sm tabular-nums text-accent">
                 {secondsToHHMMSS(Math.max(0, running.plannedSeconds - running.elapsedSeconds))} restantes
               </p>
             </div>
-            <Button variant="gold" onClick={() => onOpenTimer(running.id)}>
+            <Button variant="accent" onClick={() => onOpenTimer(running.id)}>
               Abrir cronômetro
             </Button>
           </div>
@@ -136,7 +136,7 @@ export function Hoje({
             title="Nenhuma compra ainda"
             description="Comprar tempo é trocar minutos do seu saldo por uma atividade de crescimento — o cronômetro debita em tempo real."
             action={
-              <Button variant="gold" className="mt-2" onClick={onGoBuy}>
+              <Button variant="accent" className="mt-2" onClick={onGoBuy}>
                 + Comprar tempo
               </Button>
             }
@@ -174,7 +174,7 @@ export function Hoje({
                       </span>
                     </span>
                     {session.status === 'running' && (
-                      <span className="font-mono text-xs tabular-nums text-gold">
+                      <span className="font-mono text-xs tabular-nums text-accent">
                         faltam {secondsToHHmm(Math.max(0, session.plannedSeconds - session.elapsedSeconds))}
                       </span>
                     )}

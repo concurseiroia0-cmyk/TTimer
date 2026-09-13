@@ -136,7 +136,7 @@ export function App() {
 function Splash() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-2">
-      <p className="font-mono text-3xl font-bold text-gold">TTimer</p>
+      <p className="font-mono text-3xl font-bold text-accent">TTimer</p>
       <p className="text-xs text-muted">Você não gasta tempo. Você investe tempo.</p>
     </div>
   )
@@ -145,7 +145,7 @@ function Splash() {
 function BottomNav({ active, onGo }: NavProps) {
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-md border-t border-line bg-ink/90 backdrop-blur-md md:max-w-lg"
+      className="fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-md border-t border-line/60 bg-ink/85 backdrop-blur-xl md:max-w-lg"
       aria-label="Navegação principal"
     >
       <div className="grid grid-cols-4 pb-[env(safe-area-inset-bottom)]">
@@ -156,7 +156,7 @@ function BottomNav({ active, onGo }: NavProps) {
               key={item.id}
               onClick={() => onGo(item.id)}
               className={`tap-target flex flex-col items-center gap-0.5 py-2 text-[11px] transition-colors ${
-                isActive ? 'text-gold' : 'text-muted hover:text-fg'
+                isActive ? 'text-accent' : 'text-muted hover:text-fg'
               }`}
               aria-current={isActive ? 'page' : undefined}
             >
