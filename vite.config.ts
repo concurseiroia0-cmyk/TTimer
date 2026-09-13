@@ -16,6 +16,10 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      // We register the SW ourselves in src/pwa.ts using document.baseURI,
+      // which is correct on both '/' and GitHub Pages subpaths. The plugin's
+      // auto-injected registerSW.js hardcodes '/' and would 404 on Pages.
+      injectRegister: null,
       includeAssets: ['icons/favicon.png'],
       manifest: {
         name: 'TTimer — Banco de Tempo',

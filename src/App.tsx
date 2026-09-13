@@ -140,7 +140,7 @@ export function App() {
         renewsIn={renewsIn}
         onClick={() => setTab('eu')}
       />
-      <main className="flex-1 px-4 pt-4 pb-[calc(112px+env(safe-area-inset-bottom))]">
+      <main key={tab} className="screen-in flex-1 px-4 pt-4 pb-[calc(112px+env(safe-area-inset-bottom))]">
         {tab === 'hoje' && day && (
           <Hoje
             settings={settings}

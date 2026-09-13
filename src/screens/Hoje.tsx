@@ -9,7 +9,7 @@ import {
   secondsUntilRenew,
 } from '../engine/timebank'
 import type { DayState, UserSettings } from '../state/types'
-import { BatteryBalance } from '../components/BatteryBalance'
+import { SummaryGauge } from '../components/SummaryGauge'
 import { Card, EmptyState, Motto, SectionTitle, StatusIcon, Button } from '../components/ui'
 
 const URGENT_WINDOW_SECONDS = 3 * 3600
@@ -48,12 +48,11 @@ export function Hoje({
 
   return (
     <div className="space-y-5">
-      {/* Hero balance */}
+      {/* Hero: circular gauge (Summary style) */}
       <section>
         <p className="text-xs text-muted">Seu dia renova às {settings.dayRenewsAt}</p>
-
-        <div className="mt-4">
-          <BatteryBalance
+        <div className="mt-3">
+          <SummaryGauge
             remainingSeconds={remaining}
             startingSeconds={starting}
             renewsIn={renewsIn}
@@ -106,7 +105,7 @@ export function Hoje({
 
       {/* Totals */}
       <section>
-        <SectionTitle>Resumo do dia</SectionTitle>
+        <SectionTitle>Balanço de hoje</SectionTitle>
         <Card>
           <div className="grid grid-cols-2 gap-3">
             <TotalTile label="Investido" value={formatMinutesLabel(invested)} tone="success" />

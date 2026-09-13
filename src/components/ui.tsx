@@ -18,7 +18,7 @@ export function useNow(intervalMs = 1000): number {
 // --- layout -------------------------------------------------------------------
 
 export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <div className={`rounded-2xl bg-panel p-4 ${className}`}>{children}</div>
+  return <div className={`press rounded-2xl bg-panel p-4 ${className}`}>{children}</div>
 }
 
 export function SectionTitle({ children, action }: { children: ReactNode; action?: ReactNode }) {
@@ -68,7 +68,7 @@ export function TextField({
       {label && <span className="mb-1.5 block px-1 text-sm font-medium text-muted">{label}</span>}
       <input
         {...rest}
-        className={`tap-target w-full rounded-xl bg-raised px-4 text-base text-fg outline-none placeholder:text-muted/60 focus:border-accent/60 ${className}`}
+        className={`tap-target w-full rounded-xl bg-raised px-4 text-base text-fg outline-none placeholder:text-muted focus:border-accent/60 ${className}`}
       />
       {hint && <span className="mt-1 block px-1 text-xs text-muted">{hint}</span>}
     </label>
@@ -125,7 +125,7 @@ export function BalanceBar({
 
 export function Motto({ className = '' }: { className?: string }) {
   return (
-    <p className={`text-center text-[11px] tracking-wide text-muted/80 ${className}`}>
+    <p className={`text-center text-[11px] tracking-wide text-muted ${className}`}>
       Você não gasta tempo. Você investe tempo.
     </p>
   )
